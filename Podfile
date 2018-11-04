@@ -7,7 +7,7 @@ target 'AlamofireSwiftyJSON' do
 
   pod 'Alamofire'
   pod 'SwiftyJSON'
-
+  pod 'SwiftLint'
   # Pods for AlamofireSwiftyJSON
 
 end

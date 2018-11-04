@@ -11,17 +11,17 @@ import Alamofire
 import SwiftyJSON
 
 class ViewController: UIViewController {
-    
     @IBOutlet var tableJSON: UITableView!
-    var arrNames = [[String:AnyObject]]()
-
+    var arrNames = [[String: AnyObject]]()
+    //swiftlint:disable:next identifier_name
+    var id = 3
     override func viewDidLoad() {
         super.viewDidLoad()
         Alamofire.request("http://api.androidhive.info/contacts/").responseJSON { (responseData) -> Void in
-            if((responseData.result.value) != nil) {
+            if(responseData.result.value) != nil {
                 let swiftyJsonVar = JSON(responseData.result.value!)
                 if let resData = swiftyJsonVar["contacts"].arrayObject {
-                    self.arrNames = resData as! [[String:AnyObject]]
+                    self.arrNames = (resData as? [[String: AnyObject]])!
                 }
                 if self.arrNames.count > 0 {
                     self.tableJSON.reloadData()
@@ -31,12 +31,12 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController : UITableViewDelegate,UITableViewDataSource {
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrNames.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "jsonCell")!
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "jsonCell")!
         var dictonary = arrNames[indexPath.row]
         cell.textLabel?.text = dictonary["name"] as? String
         return cell
